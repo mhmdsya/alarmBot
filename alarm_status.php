@@ -41,7 +41,7 @@ if ($result->num_rows > 0) {
       
 $data = [
     'chat_id' => '661484639',
-    'text' => '⚠️URGENT ONT NOT UP⚠️'. "\n\n". $message,
+    'text' => '⚠️ALERT SITE DOWN⚠️'. "\n\n". $message,
 ];      
 if($message != "" ){
     $response = file_get_contents("https://api.telegram.org/bot$bot_token/sendMessage?" . http_build_query($data));

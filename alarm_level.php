@@ -11,9 +11,11 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Select data
 $sql = "SELECT * FROM jakarta_utara 
-        WHERE SUBSTRING_INDEX(SUBSTRING_INDEX(redaman, '|', 2), '|', -1) IS NOT NULL
-        OR CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(redaman, '|', 2), '|', -1) AS DECIMAL(10, 2)) < -24 
-        OR CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(redaman, '|', 2), '|', -1) AS DECIMAL(10, 2)) > -7 ";
+        WHERE STATUS = 'UP' 
+        AND (
+            CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(redaman, '|', 2), '|', -1) AS DECIMAL(10, 2)) < -24 
+            OR CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(redaman, '|', 2), '|', -1) AS DECIMAL(10, 2)) > -7
+        )";
 
 $result = $conn->query($sql);
 $message = "";
@@ -55,7 +57,7 @@ if ($result->num_rows > 0) {
       
 $data = [
     'chat_id' => '661484639',
-    'text' => '⚠️Redaman terlalu kecil dan besar⚠️'. "\n\n". $message,
+    'text' => '⚠️POWER LEVEL UNDERSPEC⚠️'. "\n\n". $message,
 ];      
 if($message != "" ){
     $response = file_get_contents("https://api.telegram.org/bot$bot_token/sendMessage?" . http_build_query($data));
